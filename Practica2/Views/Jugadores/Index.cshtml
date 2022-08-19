@@ -1,0 +1,81 @@
+﻿@model ViewModelIndexJugadores
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>          
+</head>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index">
+
+
+   <label class="control-label">Buscar por Nombre de Jugador:</label>
+   <input asp-for="Name" type="search" name="Name"><br />
+   <label class="control-label">Buscar por Apellido de Jugador:</label>
+     <input asp-for="LastName" type="search" name="LastName"><br />
+
+    <label class="control-label">Buscar por liga:</label>
+
+    <select asp-for="LigaId" class ="form-control-dropdown"  name="LigaId" asp-items=ViewBag.LigaId></select>
+   <br />   
+   <br />
+ <button type="submit" title="Login" class="btn btn-primary">Search</button>
+  </form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+             Name
+            </th>
+            <th>
+                LastName
+            </th>
+            <th>
+              BirthDate
+            </th>
+            <th>
+                League
+            </th>
+            <th>
+             Team
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Jugadores) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                  @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+               <td>
+                @Html.DisplayFor(modelItem => item.Equipo.Liga.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipo.Name)
+            </td>
+          
+            <td>
+                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Details"><i class="fa fa-eye"></i></a>
+              
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+﻿@model Practica2.Models.ViewModelIndex
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>          
+</head>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index">
+<label class="control-label">Buscar por Nombre de Equipo:</label>
+<input type="search" id="searchInput" name="searchInput">
+<br />
+    <label class="control-label">Buscar por liga:</label>
+
+    <select asp-for="LigaId" class ="form-control-dropdown"  name="searchLiga" asp-items=ViewBag.LigaId></select>
+   <br />   
+   <br />
+ <button type="submit" title="Login" class="btn btn-primary">Search</button>
+  </form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Equipos
+            </th>
+            <th>
+              Liga
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.equipos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem =>item.NameLiga)
+            </td>
+           
+            
+            <td>
+             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Details"><i class="fa fa-eye"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,61 @@
+﻿@model Practica2.Mapper.DTOs.UserDto
+@{
+    ViewData["Title"] = "Register";
+}
+@{
+  Layout = null;
+}
+
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="~/css/Login.css" type="text/css" />
+</head>
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>FIFA<br></h2>
+            <br>
+            <h4>Register Page</h4>
+            <p>Register from here to access.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form action="Register" method="Post">
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @{
+                        if (!(string.IsNullOrEmpty(ViewBag.Message)))
+                        {
+                            <div class="alert alert-danger">@ViewBag.Message</div>
+                        }
+                    }
+                <div class="form-group">
+                     <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                      <span asp-validation-for="Email" class="text-danger"></span>
+                  </div>
+                  <div class="form-group">
+                       <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" placeholder="Password" />
+                      <span asp-validation-for="Password" class="text-danger"></span>
+                  </div>
+
+                <div class="d-flex justify-content-center links">
+                  <button type="submit" class="btn btn-dark">Register</button> 
+                   
+              </div>
+                <br>
+                 
+               
+               </form>
+               	<div class="d-flex justify-content-center links">
+                
+				<a asp-action="Login" class="link-secondary">Back To Login</a>
+				</div>
+   
+            </div>
+         </div>
+      </div>
+   
