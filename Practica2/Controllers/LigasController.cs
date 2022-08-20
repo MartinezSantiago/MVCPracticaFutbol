@@ -61,8 +61,8 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var liga = await _context.Ligas.Where(x=>x.IsDeleted== false && x.Id == id)
+                .FirstOrDefaultAsync();
             if (liga == null)
             {
                 return NotFound();
@@ -104,7 +104,7 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false).FirstOrDefaultAsync();
+            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false && x.Id==id).FirstOrDefaultAsync();
             if (liga == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace Practica2.Controllers
             {
                 return NotFound();
             }
-            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false).FirstOrDefaultAsync();
+            var liga = await _context.Ligas.Where(x=>x.IsDeleted== false && x.Id == id).FirstOrDefaultAsync();
 
             if (ModelState.IsValid)
             {
@@ -165,7 +165,7 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false)
+            var liga = await _context.Ligas.Where(x=>x.IsDeleted== false && x.Id == id)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (liga == null)
             {
@@ -184,7 +184,7 @@ namespace Practica2.Controllers
             {
                 return Problem("Entity set 'Context.Ligas'  is null.");
             }
-            var liga = await _context.Ligas.Where(x=>x.IsDeleted==false).FirstOrDefaultAsync();
+            var liga = await _context.Ligas.Where(x=>x.IsDeleted== false && x.Id == id).FirstOrDefaultAsync();
             if (liga != null)
             {
                 liga.LastUpdated = DateTime.Now;

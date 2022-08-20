@@ -44,9 +44,15 @@ namespace Practica2.Controllers
             foreach (var item in jugadores)
             {
                 var equipo = equipos.FirstOrDefault(x => x.Id == item.EquipoId);
-                var liga = ligas.FirstOrDefault(x => x.Id == equipo.LigaId);
-                equipo.Liga = liga;
-                item.Equipo = equipo;
+                if(equipo != null)
+                {
+                    var liga = ligas.FirstOrDefault(x => x.Id == equipo.LigaId);
+                    equipo.Liga = liga;
+
+                    item.Equipo = equipo;
+                }
+           
+            
                 
 
             }
@@ -73,15 +79,15 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false)
+            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false && x.Id == id)
                 .Include(j => j.Equipo)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync();
             if (jugador == null)
             {
                 return NotFound();
             }
 
-            return View(jugador);
+            return View(new JugadorDto { Id = jugador.Id, BirthDate = jugador.BirthDate, Equipo = jugador.Equipo, EquipoId = jugador.EquipoId, LastName = jugador.LastName, Name = jugador.Name });
         }
 
         // GET: Jugadors/Create
@@ -179,7 +185,7 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false)
+            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false && x.Id == id)
                 .Include(j => j.Equipo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             jugador.Equipo =await _context.Equipos.Where(x => x.IsDeleted == false && x.Id == jugador.EquipoId).FirstOrDefaultAsync();
@@ -194,13 +200,13 @@ namespace Practica2.Controllers
         // POST: Jugadors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int Id)
         {
             if (_context.Jugadores == null)
             {
                 return Problem("Entity set 'Context.Jugadores'  is null.");
             }
-            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false).FirstOrDefaultAsync();
+            var jugador = await _context.Jugadores.Where(x => x.IsDeleted == false && x.Id==Id).FirstOrDefaultAsync();
             if (jugador != null)
             {
                 jugador.IsDeleted = true;

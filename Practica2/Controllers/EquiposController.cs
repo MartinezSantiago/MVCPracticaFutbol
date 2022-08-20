@@ -79,9 +79,9 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false)
+            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false && x.Id == id)
                 .Include(e => e.Liga)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync();
             if (equipo == null)
             {
                 return NotFound();
@@ -125,7 +125,7 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false).FirstOrDefaultAsync();
+            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false && x.Id == id).FirstOrDefaultAsync();
             if (equipo == null)
             {
                 return NotFound();
@@ -139,14 +139,11 @@ namespace Practica2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EquipoEditDto equipoEditDto)
+        public async Task<IActionResult> Edit(EquipoEditDto equipoEditDto)
         {
-           
-            if (id != equipoEditDto.Id)
-            {
-                return NotFound();
-            }
-            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false).FirstOrDefaultAsync();
+
+            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false && x.Id == equipoEditDto.Id).FirstOrDefaultAsync();
+
             if (ModelState.IsValid)
             {
                 try
@@ -182,7 +179,7 @@ namespace Practica2.Controllers
                 return NotFound();
             }
 
-            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false)
+            var equipo = await _context.Equipos.Where(x => x.IsDeleted == false && x.Id == id)
                 .Include(e => e.Liga)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (equipo == null)
@@ -204,7 +201,7 @@ namespace Practica2.Controllers
             {
                 return Problem("Entity set 'Context.Equipos'  is null.");
             }
-            var equipo = await _context.Equipos.Where(x=>x.IsDeleted==false).FirstOrDefaultAsync();
+            var equipo = await _context.Equipos.Where(x=>x.IsDeleted== false && x.Id == id).FirstOrDefaultAsync();
             if (equipo != null)
             {
                 equipo.IsDeleted = true;
